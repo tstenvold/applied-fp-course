@@ -56,4 +56,14 @@ main = defaultMain $ testGroup "Applied FP Course - Tests"
       resp <- post "fudge/add" ""
       assertStatus' HTTP.status400 resp
       assertBody "Empty Comment Text" resp
+
+  , testWai Core.app "Check List" $ do
+      resp <- get "list"
+      assertStatus' HTTP.status200 resp
+      assertBody "ListRq not implemented yet" resp
+
+  , testWai Core.app "Unknown Command" $ do
+      resp <- post "foo/bar" ""
+      assertStatus' HTTP.status404 resp
+      assertBody "Unknown Command" resp
   ]
